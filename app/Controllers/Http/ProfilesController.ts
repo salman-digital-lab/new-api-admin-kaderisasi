@@ -11,9 +11,8 @@ export default class ProfilesController {
       const search = request.qs().search
 
       const profiles = await Profile.query()
-        .select('name', 'gender', 'major')
+        .select('*')
         .where('name', 'ILIKE', search ? '%' + search + '%' : '%%')
-        .orWhere('email', 'ILIKE', search ? '%' + search + '%' : '%%')
         .preload('user')
         .preload('university')
         .preload('role')

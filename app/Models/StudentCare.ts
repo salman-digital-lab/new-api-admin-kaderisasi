@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
 import User from './PublicUser'
 import Counselor from './User'
 
@@ -9,6 +9,11 @@ export default class StudentCare extends BaseModel {
 
   @column()
   public user_id: number
+
+  @belongsTo(() => User, {
+    foreignKey: 'user_id',
+  })
+  public user: BelongsTo<typeof User>
 
   @column()
   public problem_owner: string
@@ -35,17 +40,16 @@ export default class StudentCare extends BaseModel {
   public counselor_gender: string
 
   @column()
-  public id_counselor: number
+  public id_counselor: number | null = null
+
+  @belongsTo(() => Counselor, {
+    foreignKey: 'id_counselor',
+  })
+  public counselor: BelongsTo<typeof Counselor>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
-
-  @hasOne(() => User)
-  public user: HasOne<typeof User>
-
-  @hasOne(() => Counselor)
-  public counselor: HasOne<typeof Counselor>
 }

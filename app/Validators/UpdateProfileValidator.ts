@@ -6,7 +6,7 @@ export default class UpdateProfileValidator {
 
   public schema = schema.create({
     name: schema.string(),
-    gender: schema.string(),
+    gender: schema.enum.optional(['M', 'F'] as const),
     phone: schema.string(),
     line_id: schema.string(),
     instagram: schema.string(),
@@ -16,11 +16,11 @@ export default class UpdateProfileValidator {
     regency_id: schema.number(),
     address: schema.string(),
     university_id: schema.number(),
-    intake_year: schema.number(),
+    intake_year: schema.string(),
     faculty: schema.string(),
     major: schema.string(),
     student_id: schema.string(),
-    is_subscribing: schema.boolean(),
+    is_subscribing: schema.number(),
     role_id: schema.number(),
   })
 

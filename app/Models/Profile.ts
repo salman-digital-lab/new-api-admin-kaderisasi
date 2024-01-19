@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
 import University from './University'
 import Province from './Province'
 import Regency from './Regency'
@@ -13,7 +13,12 @@ export default class Profile extends BaseModel {
   public id: number
 
   @column()
-  public user_id: number
+  public userId: number
+
+  @belongsTo(() => User, {
+    foreignKey: 'userId',
+  })
+  public user: BelongsTo<typeof User>
 
   @column()
   public name: string
@@ -25,19 +30,29 @@ export default class Profile extends BaseModel {
   public phone: string
 
   @column()
-  public line_id: string
+  public lineId: string
 
   @column()
   public instagram: string
 
   @column()
-  public province_id: number
+  public provinceId: number
+
+  @belongsTo(() => Province, {
+    foreignKey: 'provinceId',
+  })
+  public province: BelongsTo<typeof Province>
 
   @column()
-  public regency_id: number
+  public regencyId: number
+
+  @belongsTo(() => Regency, {
+    foreignKey: 'regencyId',
+  })
+  public regency: BelongsTo<typeof Regency>
 
   @column.date()
-  public date_of_birthday: DateTime
+  public dateOfBirthday: DateTime
 
   @column()
   public city_of_birth: string
@@ -46,7 +61,12 @@ export default class Profile extends BaseModel {
   public address: string
 
   @column()
-  public university_id: number
+  public universityId: number
+
+  @belongsTo(() => University, {
+    foreignKey: 'universityId',
+  })
+  public university: BelongsTo<typeof University>
 
   @column()
   public faculty: string
@@ -55,13 +75,18 @@ export default class Profile extends BaseModel {
   public major: string
 
   @column()
-  public student_id: number
+  public studentId: number
 
   @column()
-  public intake_year: string
+  public intakeYear: string
 
   @column()
-  public role_id: number
+  public roleId: number
+
+  @belongsTo(() => Role, {
+    foreignKey: 'roleId',
+  })
+  public role: BelongsTo<typeof Role>
 
   @column()
   public ssc: number
@@ -76,26 +101,11 @@ export default class Profile extends BaseModel {
   public spectra: number
 
   @column()
-  public is_subscribing: boolean
+  public isSubscribing: boolean
 
   @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime
-
-  @hasOne(() => User)
-  public user: HasOne<typeof User>
-
-  @hasOne(() => University)
-  public university: HasOne<typeof University>
-
-  @hasOne(() => Province)
-  public province: HasOne<typeof Province>
-
-  @hasOne(() => Regency)
-  public regency: HasOne<typeof Regency>
-
-  @hasOne(() => Role)
-  public role: HasOne<typeof Role>
 }

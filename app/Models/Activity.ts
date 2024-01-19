@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
-import { TestContext } from '@japa/runner'
 
 export default class Activity extends BaseModel {
   @column({ isPrimary: true })
@@ -16,37 +15,37 @@ export default class Activity extends BaseModel {
   public description: string
 
   @column.dateTime()
-  public begin_date: DateTime
+  public beginDate: DateTime
 
   @column.dateTime()
-  public end_date: DateTime
+  public endDate: DateTime
 
   @column.dateTime()
-  public register_begin_date: DateTime
+  public registerBeginDate: DateTime
 
   @column.dateTime()
-  public register_end_date: DateTime
+  public registerEndDate: DateTime
 
   @column()
   public status: string
 
   @column()
-  public minimum_role_id: number
+  public minimumRoleId: number
 
   @column()
-  public maximum_role_id: number
+  public maximumRoleId: number
 
   @column()
-  public category_id: number
+  public categoryId: number
 
   @column()
-  public form_data: string
+  public formData: string
 
   @column()
-  public is_published: boolean
+  public isPublished: boolean
 
   @column()
-  public is_deleted: boolean
+  public isDeleted: boolean
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
