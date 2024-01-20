@@ -1,5 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/PublicUser'
+import PublicUser from 'App/Models/PublicUser'
 import Profile from 'App/Models/Profile'
 import ProfileValidator from 'App/Validators/UpdateProfileValidator'
 
@@ -13,21 +13,19 @@ export default class ProfilesController {
       const profiles = await Profile.query()
         .select('*')
         .where('name', 'ILIKE', search ? '%' + search + '%' : '%%')
-        .preload('user')
+        .preload('publicUser')
         .preload('university')
         .preload('role')
         .orderBy('name', 'asc')
         .paginate(page, perPage)
 
       return response.ok({
-        status: 'success',
-        messages: 'Get all profiles data success',
+        messages: 'GET_DATA_SUCCESS',
         data: profiles,
       })
     } catch (error) {
       return response.internalServerError({
-        status: error.status,
-        message: 'Get all profiles data failed',
+        message: 'GENERAL_ERROR',
         error: error.message,
       })
     }
@@ -36,24 +34,22 @@ export default class ProfilesController {
   public async show({ params, response }: HttpContextContract) {
     try {
       const id: number = params.id
-      const userData: any = await User.find(id)
-      const profile: any = await Profile.query()
+      const userData = await PublicUser.find(id)
+      const profile = await Profile.query()
         .select('*')
         .where('user_id', id)
         .preload('university')
         .preload('role')
         .preload('province')
-        .preload('regency')
+        .preload('city')
 
       return response.ok({
-        status: 'success',
-        message: 'Get user profile success',
+        message: 'GET_DATA_SUCCESS',
         data: { userData, profile },
       })
     } catch (error) {
       return response.internalServerError({
-        status: error.status,
-        message: 'Get user profile failed',
+        message: 'GENERAL_ERROR',
         error: error.message,
       })
     }
@@ -61,20 +57,18 @@ export default class ProfilesController {
 
   public async update({ params, request, response }: HttpContextContract) {
     try {
-      const payload: any = await request.validate(ProfileValidator)
+      const payload = await request.validate(ProfileValidator)
       const id: number = params.id
-      const profile: any = await Profile.findByOrFail('user_id', id)
-      const updated: any = await profile.merge(payload).save()
+      const profile = await Profile.findByOrFail('user_id', id)
+      const updated = await profile.merge(payload).save()
 
       return response.ok({
-        status: 'success',
-        message: 'Update user profile success',
+        message: 'UPDATE_DATA_SUCCESS',
         data: updated,
       })
     } catch (error) {
       return response.internalServerError({
-        status: error.status,
-        message: 'Update user profile failed',
+        message: 'GENERAL_ERROR',
         error: error.message,
       })
     }

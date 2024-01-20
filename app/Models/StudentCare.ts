@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
-import User from './PublicUser'
-import Counselor from './User'
+import PublicUser from './PublicUser'
+import AdminUser from './AdminUser'
 
 export default class StudentCare extends BaseModel {
   @column({ isPrimary: true })
@@ -10,10 +10,10 @@ export default class StudentCare extends BaseModel {
   @column()
   public user_id: number
 
-  @belongsTo(() => User, {
+  @belongsTo(() => PublicUser, {
     foreignKey: 'user_id',
   })
-  public user: BelongsTo<typeof User>
+  public publicUser: BelongsTo<typeof PublicUser>
 
   @column()
   public problem_owner: string
@@ -42,10 +42,10 @@ export default class StudentCare extends BaseModel {
   @column()
   public id_counselor: number | null = null
 
-  @belongsTo(() => Counselor, {
+  @belongsTo(() => AdminUser, {
     foreignKey: 'id_counselor',
   })
-  public counselor: BelongsTo<typeof Counselor>
+  public adminUser: BelongsTo<typeof AdminUser>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

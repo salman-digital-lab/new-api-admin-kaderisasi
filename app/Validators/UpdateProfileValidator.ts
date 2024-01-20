@@ -13,14 +13,13 @@ export default class UpdateProfileValidator {
     date_of_birthday: schema.date(),
     city_of_birth: schema.string(),
     province_id: schema.number(),
-    regency_id: schema.number(),
+    city_id: schema.number(),
     address: schema.string(),
     university_id: schema.number(),
     intake_year: schema.string(),
     faculty: schema.string(),
     major: schema.string(),
     student_id: schema.string(),
-    is_subscribing: schema.number(),
     role_id: schema.number(),
   })
 

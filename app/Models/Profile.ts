@@ -2,9 +2,9 @@ import { DateTime } from 'luxon'
 import { BaseModel, column, belongsTo, BelongsTo } from '@ioc:Adonis/Lucid/Orm'
 import University from './University'
 import Province from './Province'
-import Regency from './Regency'
+import City from './City'
 import Role from './Role'
-import User from './PublicUser'
+import PublicUser from './PublicUser'
 
 export default class Profile extends BaseModel {
   public static table = 'profiles'
@@ -15,10 +15,10 @@ export default class Profile extends BaseModel {
   @column()
   public userId: number
 
-  @belongsTo(() => User, {
+  @belongsTo(() => PublicUser, {
     foreignKey: 'userId',
   })
-  public user: BelongsTo<typeof User>
+  public publicUser: BelongsTo<typeof PublicUser>
 
   @column()
   public name: string
@@ -44,12 +44,12 @@ export default class Profile extends BaseModel {
   public province: BelongsTo<typeof Province>
 
   @column()
-  public regencyId: number
+  public cityId: number
 
-  @belongsTo(() => Regency, {
-    foreignKey: 'regencyId',
+  @belongsTo(() => City, {
+    foreignKey: 'cityId',
   })
-  public regency: BelongsTo<typeof Regency>
+  public city: BelongsTo<typeof City>
 
   @column.date()
   public dateOfBirthday: DateTime
@@ -99,9 +99,6 @@ export default class Profile extends BaseModel {
 
   @column()
   public spectra: number
-
-  @column()
-  public isSubscribing: boolean
 
   @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
